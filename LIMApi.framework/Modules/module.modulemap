@@ -1,0 +1,4 @@
+framework module LIMApi {
+  header "LIMApi-Swift.h"
+  requires objc
+}
