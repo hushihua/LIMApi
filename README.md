@@ -133,16 +133,16 @@ LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
 
 
 ## 2. LIMSessionManager
-* 获取会话列表
+- 获取会话列表
 > LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-    
-}
+>
+>}
  
-* 删除会话
-* 会话置顶设置
-* 会话免打扰设置
-* 取消会话免打扰设置
-* 获取单个会话详情
+- 删除会话
+- 会话置顶设置
+- 会话免打扰设置
+- 取消会话免打扰设置
+- 获取单个会话详情
 
 ## 3. LIMFriendshipManager
 ## 4. LIMGroupManager
