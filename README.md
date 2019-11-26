@@ -134,15 +134,50 @@ LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
 
 ## 2. LIMSessionManager
 - 获取会话列表
-> LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
->
->}
- 
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+
 - 删除会话
+```swift
+IMSessionManager.getInstance().deleteSession(chatId: String) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
 - 会话置顶设置
+```swift
+LIMSessionManager.getInstance().toppingSession(chatId: String, pin: String) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
 - 会话免打扰设置
+```swift
+LIMSessionManager.getInstance().keepQuiet(chatId: String) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
 - 取消会话免打扰设置
+```swift
+LIMSessionManager.getInstance().cancelQuiet(chatId: String) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
 - 获取单个会话详情
+```swift
+LIMSessionManager.getInstance().loadSessionInfo(chatId: String) { (response:LMResponse<LIMSessionInfo>) in
+    
+}
+```
 
 ## 3. LIMFriendshipManager
 ## 4. LIMGroupManager
