@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/LMPush.svg?style=flat)](https://cocoapods.org/pods/LMPush)
 [![Platform](https://img.shields.io/cocoapods/p/LMPush.svg?style=flat)](https://cocoapods.org/pods/LMPush)
 
-# 一：“乐马IM Api”使用入门
+# 一：乐马IM Api使用入门
 
 开发者的应用“乐马推送SDK”、“乐马IM Api SDK”或“乐马 IM UI SDK”服务，需要经过如下几个简单的步骤：
 
@@ -29,6 +29,7 @@ iOS 8.0 及以上
 ```
  pod 'LMPush'
  pod 'LIMApi'
+ pod 'AWSS3'
 ```
 执行以下命令，安装 LMPush。
 ```
@@ -41,10 +42,13 @@ iOS 8.0 及以上
  
 ## 手动集成（不推荐）
 
-在 Framework Search Path 中加上 LMPush，LIMApi 的文件路径，手动地将 LMPush.framework，LIMApi.framework 添加到您的工程"Frameworks and Libraries"中。
+1. 在 Framework Search Path 中加上 LMPush，LIMApi 的文件路径，手动地将 LMPush.framework，LIMApi.framework 添加到您的工程"Frameworks and Libraries"中。
 LMPush，LIMApi用swift语言进行原生开发，关于Objective-C桥接的相关操作，请自己Baidu查找。
 
-
+2. 在 Podfile 中增加以下内容。
+```
+ pod 'AWSS3'
+```
   
 
 # 三：在代码中引入
@@ -274,41 +278,52 @@ LIMGroupManager.getInstance().updateInfo(chatId: String, title: String, avatar: 
 ```
 
 ## 5. 聊天管理器 LIMChatManager
-- 获取会话列表
+- 发送消息
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMChatManager.getInstance().sendMessage(message: LIMMessageInfo) { (LMResponse<LIMMessageInfo>) in
+    if response.isSuccess == true, let info:LIMMessageInfo = response.data{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 删除消息
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMChatManager.getInstance().delete(messageIds: [String]) { (LMResponse<Bool>) in
+    if response.isSuccess == true, let info:LIMSessionInfo = response.data{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 设置消息为已读
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMChatManager.getInstance().markReaded(chatId: String, msgId: String, msgTime: String) { (LMResponse<Bool>) in
+    if response.isSuccess == true, let info:LIMSessionInfo = response.data{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 检测消息版本，当消息列表，显示的消息是用本地缓存的时候，都需要检测一次
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMChatManager.getInstance().checkVersion(chatId: String, ids: String) { (LMResponse<[LIMMessageInfo]>) in
+    if response.isSuccess == true, let list:[LIMMessageInfo] = response.data{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 获取seq_id 之后的聊天记录
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMChatManager.getInstance().loadSeqBelow(chatId: String, seq: Int, offset: Int, pageSize: Int) { (LMResponse<LIMMessageReponseInfo?>) in
+    if response.isSuccess == true, let info:LIMMessageReponseInfo = response.data{
+        //success
+    }
 }
 ```
-
-- 获取会话列表
+- 获取聊天记录列表
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMChatManager.getInstance().loadHistory(chatId: String, seq: Int, offset: Int, pageSize: Int) { (LMResponse<LIMMessageReponseInfo?>) in
+    if response.isSuccess == true, let info:LIMMessageReponseInfo = response.data{
+        //success
+    }
 }
 ```
 
