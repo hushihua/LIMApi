@@ -232,42 +232,47 @@ LIMFriendshipManager.getInstance().addFriend(friends: [String]) { (LMResponse<Bo
 }
 ```
 ## 4. 群组管理器 LIMGroupManager
-- 获取会话列表
+- 创建群组
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMGroupManager.getInstance().createGroup(title: String, avatar: String, users: [String]) { (response:LMResponse<LIMSessionInfo>) in
+    if response.isSuccess == true, let info:LIMSessionInfo = response.data{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 邀请加入群组
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMGroupManager.getInstance().invint(chatId: String, users: [String]) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 踢出群组
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMGroupManager.getInstance().kick(chatId: String, users: [String]) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 退出群组
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMGroupManager.getInstance().quit(chatId: String, masterUser: String) { (response:LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
 }
 ```
-- 获取会话列表
+- 更新群组资料
 ```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+LIMGroupManager.getInstance().updateInfo(chatId: String, title: String, avatar: String) { (response:LMResponse<LIMSessionInfo>) in
+    if response.isSuccess == true, let info:LIMSessionInfo = response.data{
+        //success
+    }
 }
 ```
-- 获取会话列表
-```swift
-LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
 
-}
-```
 ## 5. 聊天管理器 LIMChatManager
 - 获取会话列表
 ```swift
