@@ -1,4 +1,4 @@
-@[TOC](乐马IM Api (无UI))
+# 乐马IM Api (无UI)
 
 [![CI Status](https://img.shields.io/travis/adam/LMPush.svg?style=flat)](https://travis-ci.org/adam/LMPush)
 [![Version](https://img.shields.io/cocoapods/v/LMPush.svg?style=flat)](https://cocoapods.org/pods/LMPush)
@@ -134,11 +134,10 @@ LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
 
 ## 2. LIMSessionManager
 * 获取会话列表
->
-```LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+> LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
     
 }
-``` 
+ 
 * 删除会话
 * 会话置顶设置
 * 会话免打扰设置
