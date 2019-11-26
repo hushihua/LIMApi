@@ -10,7 +10,7 @@
 开发者的应用“乐马推送SDK”、“乐马IM Api SDK”或“乐马 IM UI SDK”服务，需要经过如下几个简单的步骤：
 
 ### 第 1 步：按照流程，接入“乐马推送SDK”
-具体流程请![点击这里](https://github.com/hushihua/LMPush/tree/master)
+具体流程请 [![点击这里](https://github.com/hushihua/LMPush/tree/master)]()
 
 ### 第 2 步：开发环境要求
 
@@ -61,7 +61,7 @@ LMPush，LIMApi用swift语言进行原生开发，关于Objective-C桥接的相�
 ### 1. LIMManager
 主要负责 im 服务使用前的注册，登录等用户相关信息的操作及前后台事件处理处im推送中的相关事件进行处理并分发的处理器。
 
-#### 1.1 用户注册
+#### - 1.1 用户注册
 注册操作一般由服务端逻辑进行实现，代码如下：
 ```swift
 LIMManager.getInstance().login(userName: String, password: String) { (response:LMResponse<LIMUserInfo>) in
@@ -72,7 +72,7 @@ LIMManager.getInstance().login(userName: String, password: String) { (response:L
     }
 }
 ```
-#### 1.2 用户登录
+####  - 1.2 用户登录
 用户登录操作成功后，才能对后继的业务进行操作，代码如下：
 ```swift
 LIMManager.getInstance().login(userName: String, password: String) { (response:LMResponse<LIMUserInfo>) in
@@ -83,7 +83,7 @@ LIMManager.getInstance().login(userName: String, password: String) { (response:L
     }
 }
 ```
-#### 1.3 用户资料更新，头像修改， 修改密码
+####  - 1.3 用户资料更新，头像修改， 修改密码
 该操作要在“用户登录”操作成功后才能使用（以下的函数中不再一一说明），代码如下：
 ```swift
 
@@ -118,7 +118,7 @@ LIMManager.getInstance().updatePassword(oldPassword:String, newPassword:String) 
 }
 
 ```
-#### 1.4 退出登录
+####  - 1.4 退出登录
 退出登录成功执行后，推送服务关闭，IM系统中的其它服务要进行重新进行登录操作后，才能成功执行。
 ```swift
 LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
