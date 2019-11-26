@@ -10,7 +10,7 @@
 开发者的应用“乐马推送SDK”、“乐马IM Api SDK”或“乐马 IM UI SDK”服务，需要经过如下几个简单的步骤：
 
 ## 第 1 步：按照流程，接入“乐马推送SDK”
-具体流程请 [点击这里](https://github.com/hushihua/LMPush/)
+具体流程请 [ 点击这里 ](https://github.com/hushihua/LMPush/)
 
 ## 第 2 步：开发环境要求
 
@@ -132,6 +132,21 @@ LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
 ```
 
 
+## 2. LIMSessionManager
+* 获取会话列表
+>
+```LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+    
+}
+``` 
+* 删除会话
+* 会话置顶设置
+* 会话免打扰设置
+* 取消会话免打扰设置
+* 获取单个会话详情
 
+## 3. LIMFriendshipManager
+## 4. LIMGroupManager
+## 5. LIMChatManager
 
 
