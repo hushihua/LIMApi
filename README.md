@@ -5,29 +5,21 @@
 [![License](https://img.shields.io/cocoapods/l/LMPush.svg?style=flat)](https://cocoapods.org/pods/LMPush)
 [![Platform](https://img.shields.io/cocoapods/p/LMPush.svg?style=flat)](https://cocoapods.org/pods/LMPush)
 
-## ![“乐马IM Api”使用入门]()
+## 一：“乐马IM Api”使用入门
 
 开发者的应用“乐马推送SDK”、“乐马IM Api SDK”或“乐马 IM UI SDK”服务，需要经过如下几个简单的步骤：
 
-### 第 1 步：取得乐马注册后台帐号
+### 第 1 步：按照流程，接入“乐马推送SDK”
+具体流程请![点击这里](https://github.com/hushihua/LMPush/tree/master)
 
-登录乐马云控制台。如果没有账号，请取系客服。
-
-### 第 2 步：创建应用
-
-进入控制台，输入应用包名等信息，生成AppId（应用唯一标识）, Secret（应用安全码）等信息。
-
-### 第 3 步：开发环境要求
+### 第 2 步：开发环境要求
 
 Xcode 10 及以上
 iOS 8.0 及以上
 
 
 
-
-
-
-##  ![集成说明]()
+##  二：集成说明
 
 ### CocoaPods 集成（推荐）
 
@@ -49,128 +41,94 @@ iOS 8.0 及以上
  
 ### 手动集成（不推荐）
 
-在 Framework Search Path 中加上 LMPush 的文件路径，手动地将 LMPush 目录添加到您的工程。
-LMPush用swift语言进行原生开发，关于Objective-C桥接的相关操作，请自己Baidu查找。
+在 Framework Search Path 中加上 LMPush，LIMApi 的文件路径，手动地将 LMPush.framework，LIMApi.framework 添加到您的工程"Frameworks and Libraries"中。
+LMPush，LIMApi用swift语言进行原生开发，关于Objective-C桥接的相关操作，请自己Baidu查找。
 
 
 
 
-## ![在代码中引入]()
+## 三：在代码中引入
 
-### 1.在 AppDelegate.m 文件中引入 LMPush，并初始化（以Swift项目为例）。
-```
-import LMPush
+### 1.按照“乐马推送SDK”的“代码中引入”流程，接入相关代码
 
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    LMPManager.getInstance().initSdk(appkey: "申请时生成的AppId", secret: "申请时生成的Secret") //控制台中获取
-    self.registeNotifications(application: application, didFinishLaunchingWithOptions:launchOptions)
-    return true
-}
-```
+具体流程请![点击这里](https://github.com/hushihua/LMPush/tree/master)
 
-### 2.在APNS回调代理方法中加入处理代码：
-```
-//MARK:- 初始化推送
-func registeNotifications(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?)  {
-    if #available(iOS 10, *) { //ios10 以上系统
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self
-        let options: UNAuthorizationOptions = [UNAuthorizationOptions.alert, .badge, .sound]
-        center.requestAuthorization(options: options) { (granted: Bool, error: Error?) in
-            if granted == true {
-                print("注册消息推送成功")
-            }else {
-                print(error ?? "注册消息推送失败")
-            }
+
+
+
+## 四：API相关说明
+
+### 1. LIMManager
+主要负责 im 服务使用前的注册，登录等用户相关信息的操作及前后台事件处理处im推送中的相关事件进行处理并分发的处理器。
+
+#### 1.1 用户注册
+注册操作一般由服务端逻辑进行实现，代码如下：
+```swift
+LIMManager.getInstance().login(userName: String, password: String) { (response:LMResponse<LIMUserInfo>) in
+    if response.isSuccess == true{
+        if let info:LIMUserInfo = response.data{
+            //login success
         }
     }
-    //获取device token
-    application.registerForRemoteNotifications()
 }
-
-//MARK:- deviceToken申请结果回调
-func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    let device: NSData = NSData(data: deviceToken)
-    var token = String()
-    if #available(iOS 13.0, *) {
-        let bytes = [UInt8](device)
-        for item in bytes {
-            token += String(format:"%02x", item&0x000000FF)
+```
+#### 1.2 用户登录
+用户登录操作成功后，才能对后继的业务进行操作，代码如下：
+```swift
+LIMManager.getInstance().login(userName: String, password: String) { (response:LMResponse<LIMUserInfo>) in
+    if response.isSuccess == true{
+        if let info:LIMUserInfo = response.data{
+            //login success
         }
-    }else{
-        token = device.description.trimmingCharacters(in: CharacterSet(charactersIn: "<>"))
-        token = token.replacingOccurrences(of: " ", with: "")
     }
-    print("apns推送证书 -- \(token)")
-    DemoConstant.pushToken = token
 }
-
-@available(iOS 10.0, *)
-func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-    print("前台收到推送 willPresent : \(notification.request.content.userInfo)")
-    LIMManager.getInstance().onReceiveNotification(notifiation: notification)               //im api 处理推送消息的接收
-}
-
-@available(iOS 10.0, *)
-func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void){
-    print("点击收到的apns消息推送 => \(response.notification.request.content.userInfo)")
-    LIMManager.getInstance().onReceiveNotification(notifiation: response.notification)      //im api 处理推送消息的接收
-}
-
-//app在收到带content-available字段的时候 回调调用
-func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    LIMManager.getInstance().onReceiveNotification(notifiation: response.notification)      //im api 处理推送消息的接收
-    completionHandler(UIBackgroundFetchResult.newData)
-}
-
 ```
+#### 1.3 用户资料更新，头像修改， 修改密码
+该操作要在“用户登录”操作成功后才能使用（以下的函数中不再一一说明），代码如下：
+```swift
 
-### 3. 提交APNS返回的推送token
-```
+// 更新用户资料
+LIMManager.getInstance().updateUserInfo(info: LIMUserInfo) { (response:LMResponse<LIMUserInfo>) in
+    if response.isSuccess == true{
+        if let info:LIMUserInfo = response.data{
+            //success
+        }
+    }
+}
+
 /**
- *  type: 1 生产证书， 2 测试证书
+ *  更新用户头像
+ *  avatar:  图像上传成功后返回的 “文件名称” （非完整的url路径）
  */
-LMPManager.getInstance().postToken(token: “String”, type: 1) { (response:LMResponse<Bool>) in
+LIMManager.getInstance().updateAvatar(avatar: String) { (response:LMResponse<LIMUserInfo>) in
     if response.isSuccess == true{
-        //  提交成功
-    }ese{
-        //  提交失败
+        if let info:LIMUserInfo = response.data{
+            //success
+        }
     }
 }
-```
 
-### 4. 设置推送监听器，并实现回调方法
-
-#### 4.1 设置推送监听器
-
-```
-LMPManager.getInstance().linstener = self
-```
-
-#### 4.2 实现LMPNotificationLinstner方法
-
-```
-func onNotificationReceive(item: LMNotification) {
-    //接收到推送消息
-}
-```
-
- LMNotification的数据结构如下：
- ```
-    "type": 1,// int
-    "data": {}, //JSON Object 
-    "title":"",  //string  针对推送消息 appid=1 时可能有值
-    "content":"" ,//string 针对推送消息 appid=1 时可能有值
- ```
-
-### 5. 开启推送服务
-```
-LMPManager.getInstance().startSDK { (response:LMResponse<Bool>) in
+//修改密码
+LIMManager.getInstance().updatePassword(oldPassword:String, newPassword:String) { (response:LMResponse<LIMUserInfo>) in
     if response.isSuccess == true{
-        //开启推送服务
-    }else{
-        //开启推送服务失败, 一般由于网络原因造成
+        if let info:LIMUserInfo = response.data{
+            //success
+        }
     }
 }
 
 ```
+#### 1.4 退出登录
+退出登录成功执行后，推送服务关闭，IM系统中的其它服务要进行重新进行登录操作后，才能成功执行。
+```swift
+LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
+    if response.isSuccess == true{
+        //success
+    }
+}
+```
+
+
+
+
+
