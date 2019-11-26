@@ -132,14 +132,15 @@ LIMManager.getInstance().logout { (response:LMResponse<Bool>) in
 ```
 
 
-## 2. LIMSessionManager
+## 2. 会话管理器 LIMSessionManager
 - 获取会话列表
 ```swift
 LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
-
+    if response.isSuccess == true, let list:[LIMSessionInfo] = response.data{
+        //success
+    }
 }
 ```
-
 - 删除会话
 ```swift
 IMSessionManager.getInstance().deleteSession(chatId: String) { (response:LMResponse<Bool>) in
@@ -175,12 +176,136 @@ LIMSessionManager.getInstance().cancelQuiet(chatId: String) { (response:LMRespon
 - 获取单个会话详情
 ```swift
 LIMSessionManager.getInstance().loadSessionInfo(chatId: String) { (response:LMResponse<LIMSessionInfo>) in
-    
+    if response.isSuccess == true, let info:LIMSessionInfo = response.data{
+        //success
+    }
 }
 ```
 
-## 3. LIMFriendshipManager
-## 4. LIMGroupManager
-## 5. LIMChatManager
+## 3. 好友关系管理器 LIMFriendshipManager
+- 获取好友列表
+```swift
+LIMFriendshipManager.getInstance().loadFriendList { (LMResponse<[LIMFriendInfo]>) in
+    if response.isSuccess == true, let list:[LIMFriendInfo] = response.data{
+        //success
+    }
+}
+```
+- 获取审核的好友列表
+```swift
+LIMFriendshipManager.getInstance().loadReviewList { (LMResponse<[LIMFriendInfo]>) in
+    if response.isSuccess == true, let list:[LIMFriendInfo] = response.data{
+        //success
+    }
+}
+```
+- 申请添加好友
+```swift
+LIMFriendshipManager.getInstance().requestFriends(friendName: String) { (LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
+- 审核好友
+```swift
+LIMFriendshipManager.getInstance().approveFriend(friendName: String, status: String) { (LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
+- 删除好友
+```swift
+LIMFriendshipManager.getInstance().deleteFriend(friends: [String]) { (LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
+- 添加好友 此接口直接添加成功，沒有審核。
+```swift
+LIMFriendshipManager.getInstance().addFriend(friends: [String]) { (LMResponse<Bool>) in
+    if response.isSuccess == true, let re:Bool = response.data, re == true{
+        //success
+    }
+}
+```
+## 4. 群组管理器 LIMGroupManager
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+## 5. 聊天管理器 LIMChatManager
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+
+- 获取会话列表
+```swift
+LIMSessionManager.getInstance().loadSessionList { (LMResponse<[LIMSessionInfo]>) in
+
+}
+```
+
 
 
